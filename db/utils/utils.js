@@ -6,10 +6,10 @@ exports.createRefObj = (data, key, value) => {
 };
 
 exports.formatData = (refObj, data, keyToAdd, keyToRemove) => {
-  return data.map((datum) => {
-    const newDatum = { ...datum };
-    newDatum[keyToAdd] = refObj[datum[keyToRemove]];
-    delete newDatum[keyToRemove];
-    return newDatum;
+  return data.map(({ [keyToRemove]: oldKey, ...rest }) => {
+    return {
+      ...rest,
+      [keyToAdd]: refObj[oldKey]
+    };
   });
 };
