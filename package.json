@@ -23,6 +23,7 @@
   "homepage": "https://github.com/dav3rid/movie-night#readme",
   "dependencies": {
     "dotenv": "^16.0.3",
-    "pg": "^8.10.0"
+    "pg": "^8.10.0",
+    "pg-format": "^1.0.4"
   }
 }

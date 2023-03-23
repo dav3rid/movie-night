@@ -1,8 +1,8 @@
 const db = require('../connection');
 
 exports.dropTables = async () => {
-  await db.query(`DROP TABLE IF EXISTS movies;`);
-  await db.query(`DROP TABLE IF EXISTS genres;`);
+  const tableNames = ['movies', 'genres'];
+  await db.query(`DROP TABLE IF EXISTS ${tableNames.join()}`);
 };
 
 const createGenresTable = async () => {
@@ -18,7 +18,7 @@ const createMoviesTable = async () => {
   await db.query(`
     CREATE TABLE movies (
       movie_id SERIAL PRIMARY KEY,
-      title VARCHAR(100) NOT NULL,
+      title VARCHAR NOT NULL,
       genre_id INT REFERENCES genres(genre_id) NOT NULL,
       runtime INT NOT NULL,
       director VARCHAR(100) NOT NULL,
