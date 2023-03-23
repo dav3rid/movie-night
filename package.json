@@ -1,0 +1,21 @@
+{
+  "name": "movie-night",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "setup-dbs": "psql -f db/setup.sql"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dav3rid/movie-night.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dav3rid/movie-night/issues"
+  },
+  "homepage": "https://github.com/dav3rid/movie-night#readme"
+}
