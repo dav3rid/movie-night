@@ -70,7 +70,7 @@ describe('createRefObj', () => {
 
 describe('formatData', () => {
   test('returns an empty array when passed an empty array', () => {
-    expect(formatData({}, [], '', '')).toEqual([]);
+    expect(formatData([], [])).toEqual([]);
   });
   test('swaps a property on a single array element', () => {
     const dataInput = [
@@ -95,10 +95,10 @@ describe('formatData', () => {
       }
     ];
 
-    const output = formatData(refInput, dataInput, 'genre_id', 'genre');
+    const output = formatData(dataInput, [[refInput, 'genre_id', 'genre']]);
     expect(output).toEqual(expectedOutput);
   });
-  test('swaps a property on multiple array elements', () => {
+  test('swaps multiple properties on multiple array elements', () => {
     const dataInput = [
       {
         title: 'NeverEnding Story II: The Next Chapter, The',
@@ -136,11 +136,16 @@ describe('formatData', () => {
         certificate: '18'
       }
     ];
-    const refInput = {
+    const genreRefInput = {
       adventure: 1,
       documentary: 2,
       comedy: 3,
       drama: 4
+    };
+    const certificateRefInput = {
+      PG: 1,
+      15: 2,
+      18: 3
     };
     const expectedOutput = [
       {
@@ -148,39 +153,42 @@ describe('formatData', () => {
         genre_id: 1,
         runtime: 149,
         director: 'Shirleen Cathersides',
-        certificate: '15'
+        certificate_id: 2
       },
       {
         title: "Howard Zinn: You Can't Be Neutral on a Moving Train",
         genre_id: 2,
         runtime: 149,
         director: 'Jarad Axon',
-        certificate: 'PG'
+        certificate_id: 1
       },
       {
         title: 'Nude Bomb, The',
         genre_id: 3,
         runtime: 36,
         director: 'Stanislas Jordon',
-        certificate: '15'
+        certificate_id: 2
       },
       {
         title: 'Insomnia',
         genre_id: 4,
         runtime: 236,
         director: 'Cherrita Shoppee',
-        certificate: '18'
+        certificate_id: 3
       },
       {
         title: 'Chariots of the Gods (Erinnerungen an die Zukunft)',
         genre_id: 2,
         runtime: 64,
         director: 'Jessa Dorow',
-        certificate: '18'
+        certificate_id: 3
       }
     ];
 
-    const output = formatData(refInput, dataInput, 'genre_id', 'genre');
+    const output = formatData(dataInput, [
+      [genreRefInput, 'genre_id', 'genre'],
+      [certificateRefInput, 'certificate_id', 'certificate']
+    ]);
     expect(output).toEqual(expectedOutput);
   });
   test('does not mutate input array or ref obj', () => {
@@ -271,7 +279,7 @@ describe('formatData', () => {
       drama: 4
     };
 
-    formatData(refInput, dataInput, 'genre_id', 'genre');
+    formatData(dataInput, [[refInput, 'genre_id', 'genre']]);
 
     expect(refInput).toEqual(refInputCopy);
     expect(dataInput).toEqual(dataInputCopy);

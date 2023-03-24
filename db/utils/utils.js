@@ -5,11 +5,15 @@ exports.createRefObj = (data, key, value) => {
   }, {});
 };
 
-exports.formatData = (refObj, data, keyToAdd, keyToRemove) => {
-  return data.map(({ [keyToRemove]: oldKey, ...rest }) => {
-    return {
-      ...rest,
-      [keyToAdd]: refObj[oldKey]
-    };
+exports.formatData = (data, alterations) => {
+  return data.map((datum) => {
+    const datumCopy = { ...datum };
+
+    alterations.forEach(([refObj, keyToAdd, keyToRemove]) => {
+      datumCopy[keyToAdd] = refObj[datum[keyToRemove]];
+      delete datumCopy[keyToRemove];
+    });
+
+    return datumCopy;
   });
 };
