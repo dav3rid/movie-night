@@ -8,7 +8,7 @@ Available endpoints
   - Sorted by genre asc by default ✅
   - Queries
     - `order` - `asc`, `desc` ✅
-- POST /api/genres
+- POST /api/genres ✅
 
   - Request Body
     - `{ "genre": "new genre name" }`

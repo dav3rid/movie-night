@@ -12,3 +12,19 @@ exports.selectGenres = async (order = 'asc') => {
   `);
   return genres;
 };
+
+exports.insertGenre = async ({ genre }) => {
+  const {
+    rows: [insertedGenre]
+  } = await db.query(
+    `
+  INSERT INTO genres
+  (genre)
+  VALUES
+  ($1)
+  RETURNING *;
+  `,
+    [genre]
+  );
+  return insertedGenre;
+};
