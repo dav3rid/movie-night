@@ -62,3 +62,4 @@ Available endpoints
     - All fields optional
 
 musical is genre with no associated movies
+hosted at: https://movie-night-bfro.onrender.com
