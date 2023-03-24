@@ -46,7 +46,10 @@ const createMoviesTable = async () => {
 };
 
 exports.createTables = async () => {
-  await Promise.all([createGenresTable(), createCertificatesTable()]);
-  await createDirectorsTable();
+  await Promise.all([
+    createGenresTable(),
+    createCertificatesTable(),
+    createDirectorsTable()
+  ]);
   await createMoviesTable();
 };
