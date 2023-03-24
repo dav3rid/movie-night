@@ -15,7 +15,7 @@ exports.handleCustomRejectionErrors = (err, req, res, next) => {
 
 exports.handlePsqlErrors = (err, req, res, next) => {
   const { code } = err;
-  const badRequestCodes = ['23502'];
+  const badRequestCodes = ['23502', '22P02'];
   if (badRequestCodes.includes(code)) {
     res.status(400).send({ msg: 'bad request' });
   } else {

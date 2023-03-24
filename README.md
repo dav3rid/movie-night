@@ -13,7 +13,7 @@ Available endpoints
   - Request Body
     - `{ "genre": "new genre name" }`
 
-- GET /api/genres/:genre_id
+- GET /api/genres/:genre_id ✅
 - PATCH /api/genres/:genre_id
 
   - Request Body

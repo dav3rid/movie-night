@@ -100,5 +100,17 @@ describe('/api/genres/:genre_id', () => {
       expect(genre).toHaveProperty('genre_id', 1);
       expect(genre).toHaveProperty('genre', 'adventure');
     });
+    test('404 - genre not found', async () => {
+      const {
+        body: { msg }
+      } = await request(app).get('/api/genres/1000').expect(404);
+      expect(msg).toBe('genre not found');
+    });
+    test('400 - invalid genre_id', async () => {
+      const {
+        body: { msg }
+      } = await request(app).get('/api/genres/invalid').expect(400);
+      expect(msg).toBe('bad request');
+    });
   });
 });

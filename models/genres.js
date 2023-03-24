@@ -28,3 +28,20 @@ exports.insertGenre = async ({ genre }) => {
   );
   return insertedGenre;
 };
+
+exports.selectGenreById = async (genre_id) => {
+  const {
+    rows: [genre]
+  } = await db.query(
+    `
+  SELECT * FROM genres
+  WHERE genre_id = $1
+  LIMIT 1;
+  `,
+    [genre_id]
+  );
+  if (!genre) {
+    return Promise.reject({ status: 404, msg: 'genre not found' });
+  }
+  return genre;
+};
