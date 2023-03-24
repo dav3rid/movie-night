@@ -188,3 +188,32 @@ describe('/api/genres/:genre_id', () => {
     await Promise.all(invalidMethodPromises);
   });
 });
+
+describe('/api/certificates', () => {
+  describe('GET', () => {
+    test('200 - certificate objects', async () => {
+      const {
+        body: { certificates }
+      } = await request(app).get('/api/certificates').expect(200);
+      expect(certificates).toEqual([
+        { certificate_id: 1, certificate: 'U' },
+        { certificate_id: 2, certificate: 'PG' },
+        { certificate_id: 3, certificate: '12' },
+        { certificate_id: 4, certificate: '15' },
+        { certificate_id: 5, certificate: '18' }
+      ]);
+    });
+  });
+  test('405 - method not allowed', async () => {
+    const invalidMethods = ['post', 'put', 'patch', 'delete'];
+    const invalidMethodPromises = invalidMethods.map(async (method) => {
+      const {
+        body: { msg }
+      } = await request(app)[method]('/api/certificates').expect(405);
+      expect(msg).toBe('method not allowed');
+    });
+    await Promise.all(invalidMethodPromises);
+  });
+});
+
+describe('/api/movies', () => {});

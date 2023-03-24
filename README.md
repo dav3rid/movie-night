@@ -14,12 +14,12 @@ Available endpoints
     - `{ "genre": "new genre name" }`
 
 - GET /api/genres/:genre_id ✅
-- PATCH /api/genres/:genre_id
+- PATCH /api/genres/:genre_id ✅
 
   - Request Body
     - `{ "genre": "updated genre name" }`
 
-- GET /api/certificates
+- GET /api/certificates ✅
 
 - GET /api/directors
 
