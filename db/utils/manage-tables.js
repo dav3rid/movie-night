@@ -1,7 +1,7 @@
 const db = require('../connection');
 
 exports.dropTables = async () => {
-  const tableNames = ['movies', 'genres'];
+  const tableNames = ['movies', 'directors', 'genres', 'certificates'];
   await db.query(`DROP TABLE IF EXISTS ${tableNames.join()}`);
 };
 
@@ -14,6 +14,24 @@ const createGenresTable = async () => {
   `);
 };
 
+const createCertificatesTable = async () => {
+  await db.query(`
+    CREATE TABLE certificates (
+      certificate_id SERIAL PRIMARY KEY,
+      certificate VARCHAR(2) NOT NULL
+    );
+  `);
+};
+
+const createDirectorsTable = async () => {
+  await db.query(`
+    CREATE TABLE directors (
+      director_id SERIAL PRIMARY KEY,
+      name VARCHAR(100) NOT NULL
+    );
+  `);
+};
+
 const createMoviesTable = async () => {
   await db.query(`
     CREATE TABLE movies (
@@ -21,13 +39,14 @@ const createMoviesTable = async () => {
       title VARCHAR NOT NULL,
       genre_id INT REFERENCES genres(genre_id) NOT NULL,
       runtime INT NOT NULL,
-      director VARCHAR(100) NOT NULL,
-      certificate VARCHAR(2) NOT NULL
+      director_id INT REFERENCES directors(director_id) NOT NULL,
+      certificate_id INT REFERENCES certificates(certificate_id) NOT NULL
     );
   `);
 };
 
 exports.createTables = async () => {
-  await createGenresTable();
+  await Promise.all([createGenresTable(), createCertificatesTable()]);
+  await createDirectorsTable();
   await createMoviesTable();
 };
