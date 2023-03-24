@@ -113,4 +113,78 @@ describe('/api/genres/:genre_id', () => {
       expect(msg).toBe('bad request');
     });
   });
+  describe('PATCH', () => {
+    test('200 - accepts updated genre and responds', async () => {
+      const updatedGenre = {
+        genre: 'test_updated_genre'
+      };
+      const {
+        body: { genre }
+      } = await request(app)
+        .patch('/api/genres/1')
+        .send(updatedGenre)
+        .expect(200);
+      expect(genre).toHaveProperty('genre', 'test_updated_genre');
+      expect(genre).toHaveProperty('genre_id', 1);
+    });
+    test('200 - ignores additional properties', async () => {
+      const updatedGenre = {
+        genre: 'test_updated_genre',
+        randomVal: true
+      };
+      const {
+        body: { genre }
+      } = await request(app)
+        .patch('/api/genres/7')
+        .send(updatedGenre)
+        .expect(200);
+      expect(genre).toHaveProperty('genre', 'test_updated_genre');
+      expect(genre).toHaveProperty('genre_id', 7);
+    });
+    test('200 - responds with original genre if no new genre is provided', async () => {
+      const updatedGenre = {};
+      const {
+        body: { genre }
+      } = await request(app)
+        .patch('/api/genres/1')
+        .send(updatedGenre)
+        .expect(200);
+      expect(genre).toHaveProperty('genre', 'adventure');
+      expect(genre).toHaveProperty('genre_id', 1);
+    });
+    test('404 - genre not found', async () => {
+      const updatedGenre = {
+        genre: 'test_updated_genre'
+      };
+      const {
+        body: { msg }
+      } = await request(app)
+        .patch('/api/genres/1000')
+        .send(updatedGenre)
+        .expect(404);
+      expect(msg).toBe('genre not found');
+    });
+    test('400 - invalid genre+id', async () => {
+      const updatedGenre = {
+        genre: 'test_updated_genre'
+      };
+      const {
+        body: { msg }
+      } = await request(app)
+        .patch('/api/genres/invalid')
+        .send(updatedGenre)
+        .expect(400);
+      expect(msg).toBe('bad request');
+    });
+  });
+  test('405 - method not allowed', async () => {
+    const invalidMethods = ['post', 'put', 'delete'];
+    const invalidMethodPromises = invalidMethods.map(async (method) => {
+      const {
+        body: { msg }
+      } = await request(app)[method]('/api/genres/1').expect(405);
+      expect(msg).toBe('method not allowed');
+    });
+    await Promise.all(invalidMethodPromises);
+  });
 });

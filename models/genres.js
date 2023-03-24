@@ -45,3 +45,21 @@ exports.selectGenreById = async (genre_id) => {
   }
   return genre;
 };
+
+exports.updateGenreById = async (genre_id, { genre }) => {
+  const {
+    rows: [updatedGenre]
+  } = await db.query(
+    `
+  UPDATE genres
+  SET genre = $1
+  WHERE genre_id = $2
+  RETURNING *;
+  `,
+    [genre, genre_id]
+  );
+  if (!updatedGenre) {
+    return Promise.reject({ status: 404, msg: 'genre not found' });
+  }
+  return updatedGenre;
+};

@@ -1,7 +1,8 @@
 const {
   selectGenres,
   insertGenre,
-  selectGenreById
+  selectGenreById,
+  updateGenreById
 } = require('../models/genres');
 
 exports.getGenres = async (req, res, next) => {
@@ -27,6 +28,21 @@ exports.getGenreById = async (req, res, next) => {
   const { genre_id } = req.params;
   try {
     const genre = await selectGenreById(genre_id);
+    res.status(200).send({ genre });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.patchGenreById = async (req, res, next) => {
+  const { genre_id } = req.params;
+  try {
+    let genre;
+    if (!req.body.genre) {
+      genre = await selectGenreById(genre_id);
+    } else {
+      genre = await updateGenreById(genre_id, req.body);
+    }
     res.status(200).send({ genre });
   } catch (err) {
     next(err);
