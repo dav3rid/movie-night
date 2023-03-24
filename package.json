@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
+    "test-app": "jest __tests__/app.test.js",
+    "test-utils": "jest __tests__/utils.test.js",
     "setup-dbs": "psql -f db/setup.sql",
     "query": "psql -f temp.sql > temp.txt",
     "seed": "node db/run-seed.js",
@@ -25,5 +27,10 @@
     "dotenv": "^16.0.3",
     "pg": "^8.10.0",
     "pg-format": "^1.0.4"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0",
+    "nodemon": "^2.0.22",
+    "supertest": "^6.3.3"
   }
 }
