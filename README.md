@@ -2,9 +2,9 @@
 
 Available endpoints
 
-- GET /api
+- GET /api ❌
 
-- GET /api/genres
+- GET /api/genres ✅
   - Queries
     - `sort_by` - `genre`
     - `order` - `asc`, `desc`
