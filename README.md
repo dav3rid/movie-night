@@ -5,9 +5,9 @@ Available endpoints
 - GET /api ❌
 
 - GET /api/genres ✅
+  - Sorted by genre asc by default ✅
   - Queries
-    - `sort_by` - `genre`
-    - `order` - `asc`, `desc`
+    - `order` - `asc`, `desc` ✅
 - POST /api/genres
 
   - Request Body

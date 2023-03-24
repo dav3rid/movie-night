@@ -1,4 +1,8 @@
 const express = require('express');
+const {
+  handleCustomRejectionErrors,
+  handle500Errors
+} = require('./controllers/errors');
 const apiRouter = require('./routes/api');
 
 const app = express();
@@ -9,9 +13,7 @@ app.get('/', (req, res) => {
 
 app.use('/api', apiRouter);
 
-app.use((err, req, res, next) => {
-  console.log(err, '<<< err');
-  res.status(500).send({ msg: 'server error' });
-});
+app.use(handleCustomRejectionErrors);
+app.use(handle500Errors);
 
 module.exports = app;
